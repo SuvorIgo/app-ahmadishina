@@ -15,15 +15,15 @@ jobs:
             - uses: actions/checkout@2
 
             - name: Install dependencies
-                run: npm install
+              run: npm install
 
             - name: Lint the codebase
-                if: always()
-                run: npm run lint
+              if: always()
+              run: npm run lint
 
             - name: Test our code
-                if: always()
-                run: npm run test
+              if: always()
+              run: npm run test
 
             - name: Build
-                run: npm run build
+              run: npm run build

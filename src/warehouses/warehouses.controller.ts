@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, HttpException, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { WarehousesService } from './warehouses.service';
 import { CreateWarehouseDto } from './dtos/create-warehouse.dto';
 import { Warehouse } from './entities/warehouse.schema';
@@ -6,43 +15,49 @@ import { UpdateWarehouseDto } from './dtos/update-warehouse.dto';
 
 @Controller('warehouses')
 export class WarehousesController {
-    constructor(private readonly warehousesService: WarehousesService) {}
+  constructor(private readonly warehousesService: WarehousesService) {}
 
-    @Post('/create')
-    async create(@Body() payload: CreateWarehouseDto): Promise<Warehouse | HttpException> {
-        return await this.warehousesService.create(payload);
-    }
+  @Post('/create')
+  async create(
+    @Body() payload: CreateWarehouseDto,
+  ): Promise<Warehouse | HttpException> {
+    return await this.warehousesService.create(payload);
+  }
 
-    @Get('/')
-    async getAll(): Promise<Warehouse[] | HttpException> {
-        return await this.warehousesService.getAll();
-    }
+  @Get('/')
+  async getAll(): Promise<Warehouse[] | HttpException> {
+    return await this.warehousesService.getAll();
+  }
 
-    @Get('/getById/:id')
-    async getById(@Param('id') id: number): Promise<Warehouse | HttpException> {
-        return await this.warehousesService.getById(Number(id))
-    }
+  @Get('/getById/:id')
+  async getById(@Param('id') id: number): Promise<Warehouse | HttpException> {
+    return await this.warehousesService.getById(Number(id));
+  }
 
-    @Get('/getByName/:name')
-    async getByName(@Param('name') name: string): Promise<Warehouse | HttpException> {
-        return await this.warehousesService.getByName(name);
-    }
+  @Get('/getByName/:name')
+  async getByName(
+    @Param('name') name: string,
+  ): Promise<Warehouse | HttpException> {
+    return await this.warehousesService.getByName(name);
+  }
 
-    @Get('/getBySelected/:selected')
-    async getBySelected(@Param('selected') selected: string): Promise<Warehouse[] | HttpException> {
-        return await this.warehousesService.getBySelected(JSON.parse(selected));
-    }
+  @Get('/getBySelected/:selected')
+  async getBySelected(
+    @Param('selected') selected: string,
+  ): Promise<Warehouse[] | HttpException> {
+    return await this.warehousesService.getBySelected(JSON.parse(selected));
+  }
 
-    @Patch('/:id')
-    async update(
-        @Param('id') id: number,
-        @Body() payload: UpdateWarehouseDto
-    ): Promise<Warehouse | HttpException> {
-        return await this.warehousesService.update(id, payload);
-    }
+  @Patch('/:id')
+  async update(
+    @Param('id') id: number,
+    @Body() payload: UpdateWarehouseDto,
+  ): Promise<Warehouse | HttpException> {
+    return await this.warehousesService.update(id, payload);
+  }
 
-    @Delete('/:id')
-    async delete(@Param('id') id: number): Promise<Warehouse | HttpException> {
-        return await this.warehousesService.delete(id);
-    }
+  @Delete('/:id')
+  async delete(@Param('id') id: number): Promise<Warehouse | HttpException> {
+    return await this.warehousesService.delete(id);
+  }
 }

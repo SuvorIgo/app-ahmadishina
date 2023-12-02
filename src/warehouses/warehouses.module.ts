@@ -7,8 +7,8 @@ import { Warehouse, WarehouseSchema } from './entities/warehouse.schema';
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: Warehouse.name, schema: WarehouseSchema }
-    ])
+      { name: Warehouse.name, schema: WarehouseSchema },
+    ]),
   ],
   controllers: [WarehousesController],
   providers: [WarehousesService],

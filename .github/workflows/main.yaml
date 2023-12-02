@@ -1,0 +1,29 @@
+name: CI Pipeline
+
+on:
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
+    workflow_dispatch:
+
+jobs:
+    AppAhmadishina:
+        name: CI Pipline for App Ahmadishina
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@2
+
+            - name: Install dependencies
+                run: npm install
+
+            - name: Lint the codebase
+                if: always()
+                run: npm run lint
+
+            - name: Test our code
+                if: always()
+                run: npm run test
+
+            - name: Build
+                run: npm run build

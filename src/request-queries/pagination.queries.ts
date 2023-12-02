@@ -1,10 +1,9 @@
-import { IsString, Max, Min } from "class-validator";
+import { IsString } from 'class-validator';
 
 export class PaginationQueries {
-    @IsString()
-    page?: string = '1';
+  @IsString()
+  page?: string = '1';
 
-    @IsString()
-    pageSize?: string = '10';
-
+  @IsString()
+  pageSize?: string = '10';
 }

@@ -7,7 +7,7 @@ import {
   Param,
   Patch,
   Post,
-  Query
+  Query,
 } from '@nestjs/common';
 import { WarehousesService } from './warehouses.service';
 import { CreateWarehouseDto } from './dtos/create-warehouse.dto';
@@ -27,7 +27,9 @@ export class WarehousesController {
   }
 
   @Get('/')
-  async getAll(@Query() queries: PaginationQueries): Promise<Warehouse[] | HttpException> {
+  async getAll(
+    @Query() queries: PaginationQueries,
+  ): Promise<Warehouse[] | HttpException> {
     return await this.warehousesService.getAll(queries);
   }
 

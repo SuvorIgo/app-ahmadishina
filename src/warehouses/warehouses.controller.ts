@@ -7,11 +7,13 @@ import {
   Param,
   Patch,
   Post,
+  Query
 } from '@nestjs/common';
 import { WarehousesService } from './warehouses.service';
 import { CreateWarehouseDto } from './dtos/create-warehouse.dto';
 import { Warehouse } from './entities/warehouse.schema';
 import { UpdateWarehouseDto } from './dtos/update-warehouse.dto';
+import { PaginationQueries } from 'src/request-queries/pagination.queries';
 
 @Controller('warehouses')
 export class WarehousesController {
@@ -25,8 +27,8 @@ export class WarehousesController {
   }
 
   @Get('/')
-  async getAll(): Promise<Warehouse[] | HttpException> {
-    return await this.warehousesService.getAll();
+  async getAll(@Query() queries: PaginationQueries): Promise<Warehouse[] | HttpException> {
+    return await this.warehousesService.getAll(queries);
   }
 
   @Get('/getById/:id')

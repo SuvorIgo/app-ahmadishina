@@ -4,6 +4,7 @@ import { Warehouse, WarehouseDocument } from './entities/warehouse.schema';
 import { Model } from 'mongoose';
 import { CreateWarehouseDto } from './dtos/create-warehouse.dto';
 import { UpdateWarehouseDto } from './dtos/update-warehouse.dto';
+import { PaginationQueries } from 'src/request-queries/pagination.queries';
 
 @Injectable()
 export class WarehousesService {
@@ -28,9 +29,12 @@ export class WarehousesService {
     }
   }
 
-  async getAll(): Promise<Warehouse[] | HttpException> {
+  async getAll({ pageSize, page } : PaginationQueries): Promise<Warehouse[] | HttpException> {
     try {
-      return await this.warehouseModel.find();
+      if (typeof Number(page) !== 'number' || Number(page) < 1) return new HttpException('page должно быть целочисленным значением и быть не меньше 1', HttpStatus.BAD_REQUEST);
+      if (typeof Number(pageSize) !== 'number' || Number(pageSize) < 2 || Number(pageSize) > 50) return new HttpException('pageSize должно быть целочисленным значением и быть больше или равно 2, но быть меньше или равно 50', HttpStatus.BAD_REQUEST);
+
+      return await this.warehouseModel.find().limit(Number(pageSize)).skip((Number(page) == 1) ? 0 : (Number(page) - 1) * Number(pageSize));
     } catch (err) {
       console.log(err);
       return new HttpException(

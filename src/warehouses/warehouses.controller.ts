@@ -1,7 +1,8 @@
-import { Body, Controller, Get, HttpException, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, Param, Patch, Post, Query } from '@nestjs/common';
 import { WarehousesService } from './warehouses.service';
 import { CreateWarehouseDto } from './dtos/create-warehouse.dto';
 import { Warehouse } from './entities/warehouse.schema';
+import { UpdateWarehouseDto } from './dtos/update-warehouse.dto';
 
 @Controller('warehouses')
 export class WarehousesController {
@@ -12,12 +13,12 @@ export class WarehousesController {
         return await this.warehousesService.create(payload);
     }
 
-    @Get('/getAll')
+    @Get('/')
     async getAll(): Promise<Warehouse[] | HttpException> {
         return await this.warehousesService.getAll();
     }
 
-    @Get('/get/:id')
+    @Get('/getById/:id')
     async getById(@Param('id') id: number): Promise<Warehouse | HttpException> {
         return await this.warehousesService.getById(Number(id))
     }
@@ -30,5 +31,18 @@ export class WarehousesController {
     @Get('/getBySelected/:selected')
     async getBySelected(@Param('selected') selected: string): Promise<Warehouse[] | HttpException> {
         return await this.warehousesService.getBySelected(JSON.parse(selected));
+    }
+
+    @Patch('/:id')
+    async update(
+        @Param('id') id: number,
+        @Body() payload: UpdateWarehouseDto
+    ): Promise<Warehouse | HttpException> {
+        return await this.warehousesService.update(id, payload);
+    }
+
+    @Delete('/:id')
+    async delete(@Param('id') id: number): Promise<Warehouse | HttpException> {
+        return await this.warehousesService.delete(id);
     }
 }

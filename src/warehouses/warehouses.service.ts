@@ -3,6 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Warehouse, WarehouseDocument } from './entities/warehouse.schema';
 import { Model } from 'mongoose';
 import { CreateWarehouseDto } from './dtos/create-warehouse.dto';
+import { UpdateWarehouseDto } from './dtos/update-warehouse.dto';
 
 @Injectable()
 export class WarehousesService {
@@ -56,6 +57,28 @@ export class WarehousesService {
             if (!(typeof selected == "boolean")) return new HttpException('selected должен быть булевым значением', HttpStatus.BAD_REQUEST);
 
             return (await this.warehouseModel.find()).filter(item => item.selected == selected)
+        } catch (err) {
+            console.log(err);
+            throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
+    async update(id: number, payload: UpdateWarehouseDto): Promise<Warehouse | HttpException> {
+        try {
+            return await this.warehouseModel.findOneAndUpdate({ id: id }, payload);
+        } catch (err) {
+            console.log(err);
+            throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
+    async delete(id: number): Promise<Warehouse | HttpException> {
+        try {
+            const warehouse = await this.getById(id);
+
+            await this.warehouseModel.deleteOne({ id: id });
+
+            return warehouse;
         } catch (err) {
             console.log(err);
             throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR)

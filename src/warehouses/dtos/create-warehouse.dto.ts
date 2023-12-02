@@ -74,7 +74,7 @@ export class CreateWarehouseDto {
     description: 'Признак того, что склад уже выбран продавцом',
     required: false,
     example: true,
-    default: false
+    default: false,
   })
   @IsBoolean({ message: 'selected должен быть true или false' })
   selected?: boolean = false;

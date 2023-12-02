@@ -10,11 +10,13 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('AppAhmadishina API Docs')
-    .setDescription(`За основу данных, которые оперируют в БД\nбыл взят метод WB API: <a>https://openapi.wb.ru/marketplace/api/ru/#tag/Sklady/paths/~1api~1v3~1offices/get</a>`)
+    .setDescription(
+      `За основу данных, которые оперируют в БД\nбыл взят метод WB API: <a>https://openapi.wb.ru/marketplace/api/ru/#tag/Sklady/paths/~1api~1v3~1offices/get</a>`,
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  
+
   SwaggerModule.setup('/api/docs', app, document);
 
   await app.listen(parseInt(process.env.APP_PORT));

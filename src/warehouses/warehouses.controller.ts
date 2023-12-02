@@ -15,7 +15,13 @@ import { CreateWarehouseDto } from './dtos/create-warehouse.dto';
 import { Warehouse } from './entities/warehouse.schema';
 import { UpdateWarehouseDto } from './dtos/update-warehouse.dto';
 import { PaginationQueries } from 'src/request-queries/pagination.queries';
-import { ApiBody, ApiCreatedResponse, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { HttpExceptionType } from 'src/types/http-exception.type';
 
 @ApiTags('Склады WB')
@@ -62,9 +68,12 @@ export class WarehousesController {
     return await this.warehousesService.getByName(name);
   }
 
-  @ApiOperation({ summary: 'Получение складов по признаку того, что склад уже был выбран продавцом'})
+  @ApiOperation({
+    summary:
+      'Получение складов по признаку того, что склад уже был выбран продавцом',
+  })
   @ApiResponse({ status: HttpStatus.OK, type: [Warehouse] })
-  @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: HttpExceptionType})
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: HttpExceptionType })
   @Get('/getBySelected/:selected')
   async getBySelected(
     @Param('selected') selected: string,
@@ -72,10 +81,10 @@ export class WarehousesController {
     return await this.warehousesService.getBySelected(JSON.parse(selected));
   }
 
-  @ApiOperation({ summary: 'Обновление склада по его id'})
+  @ApiOperation({ summary: 'Обновление склада по его id' })
   @ApiBody({ type: UpdateWarehouseDto })
   @ApiResponse({ status: HttpStatus.OK, type: [Warehouse] })
-  @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: HttpExceptionType})
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: HttpExceptionType })
   @Patch('/:id')
   async update(
     @Param('id') id: number,
@@ -84,9 +93,9 @@ export class WarehousesController {
     return await this.warehousesService.update(id, payload);
   }
 
-  @ApiOperation({ summary: 'Удаление склада по его id'})
+  @ApiOperation({ summary: 'Удаление склада по его id' })
   @ApiResponse({ status: HttpStatus.OK, type: [Warehouse] })
-  @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: HttpExceptionType})
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: HttpExceptionType })
   @Delete('/:id')
   async delete(@Param('id') id: number): Promise<Warehouse | HttpException> {
     return await this.warehousesService.delete(id);

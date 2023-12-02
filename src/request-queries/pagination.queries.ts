@@ -8,7 +8,7 @@ export class PaginationQueries {
     required: false,
     example: 1,
     default: 1,
-    minimum: 1
+    minimum: 1,
   })
   @IsString()
   page?: string = '1';
@@ -20,7 +20,7 @@ export class PaginationQueries {
     example: 1,
     default: 10,
     minimum: 2,
-    maximum: 50
+    maximum: 50,
   })
   @IsString()
   pageSize?: string = '10';

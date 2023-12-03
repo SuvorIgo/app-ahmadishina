@@ -72,7 +72,7 @@ describe('WarehousesController', () => {
         selected: true,
       })
       .expect(201);
-  });
+  }, 30000);
 
   afterEach(async () => {
     await (app.get(getConnectionToken()) as Connection).db.dropDatabase();

@@ -12,6 +12,9 @@ jobs:
         name: CI Pipline for App Ahmadishina
         runs-on: ubuntu-latest
         steps:
+            - name: Start MongoDB
+              uses: supercharge/mongodb-github-action@1.2.0
+
             - uses: actions/checkout@v2
 
             - name: Install dependencies

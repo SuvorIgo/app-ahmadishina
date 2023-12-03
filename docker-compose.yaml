@@ -4,18 +4,16 @@ services:
   mongodb:
     image: mongo
     container_name: mongodb_container
-    env_file:
-      - .env
     ports:
       - 27018:27017
     volumes:
       - mongodb_data:/mongodb/data
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
-      interval: 1m
-      timeout: 30s
+      interval: 30m
+      timeout: 5s
       retries: 10
-      start_period: 30s
+      start_period: 15s
     restart: unless-stopped
     networks:
       - app_network
@@ -23,15 +21,8 @@ services:
   app:
     build: .
     container_name: app_container
-    environment:
-      DB_HOST: mongodb
-      DB_PORT: 27018
-    env_file:
-      - .env
-    volumes:
-      - .:/app
     ports:
-      - ${APP_PORT}:${APP_PORT}
+      - 8888:8888
     depends_on:
       - mongodb
     networks:

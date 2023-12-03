@@ -23,6 +23,9 @@ services:
   app:
     build: .
     container_name: app_container
+    environment:
+      DB_HOST: mongodb
+      DB_PORT: 27018
     env_file:
       - .env
     volumes:

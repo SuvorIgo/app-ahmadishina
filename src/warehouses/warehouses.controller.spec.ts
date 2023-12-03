@@ -20,7 +20,10 @@ describe('WarehousesController', () => {
   beforeEach(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
       imports: [
-        ConfigModule.forRoot(),
+        ConfigModule.forRoot({
+          envFilePath: `${process.cwd()}/.env.${process.env.NODE_ENV}`,
+          isGlobal: true,
+        }),
         MongooseModule.forRoot(
           `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}`,
           { dbName: 'test' },

@@ -80,24 +80,6 @@ export class WarehousesService {
     }
   }
 
-  async getByName(name: string): Promise<Warehouse | HttpException> {
-    try {
-      if (!name)
-        return new HttpException(
-          'name должен быть строкой',
-          HttpStatus.BAD_REQUEST,
-        );
-
-      return await this.warehouseModel.findOne({ name: name });
-    } catch (err) {
-      console.log(err);
-      throw new HttpException(
-        'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-  }
-
   async getBySelected(selected: boolean): Promise<Warehouse[] | HttpException> {
     try {
       if (!(typeof selected == 'boolean'))

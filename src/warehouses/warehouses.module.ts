@@ -12,5 +12,10 @@ import { Warehouse, WarehouseSchema } from './entities/warehouse.schema';
   ],
   controllers: [WarehousesController],
   providers: [WarehousesService],
+  exports: [
+    MongooseModule.forFeature([
+      { name: Warehouse.name, schema: WarehouseSchema },
+    ]),
+  ],
 })
 export class WarehousesModule {}

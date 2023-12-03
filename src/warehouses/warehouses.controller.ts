@@ -14,7 +14,6 @@ import { WarehousesService } from './warehouses.service';
 import { CreateWarehouseDto } from './dtos/create-warehouse.dto';
 import { Warehouse } from './entities/warehouse.schema';
 import { UpdateWarehouseDto } from './dtos/update-warehouse.dto';
-import { PaginationQueries } from 'src/request-queries/pagination.queries';
 import {
   ApiBody,
   ApiCreatedResponse,
@@ -22,7 +21,8 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { HttpExceptionType } from 'src/types/http-exception.type';
+import { PaginationQueries } from '../request-queries/pagination.queries';
+import { HttpExceptionType } from '../types/http-exception.type';
 
 @ApiTags('Склады WB')
 @Controller('warehouses')
@@ -40,7 +40,7 @@ export class WarehousesController {
     return await this.warehousesService.create(payload);
   }
 
-  @ApiOperation({ summary: 'Получние всех складов' })
+  @ApiOperation({ summary: 'Получение всех складов' })
   @ApiResponse({ status: HttpStatus.OK, type: [Warehouse] })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: HttpExceptionType })
   @Get('/')
@@ -56,16 +56,6 @@ export class WarehousesController {
   @Get('/getById/:id')
   async getById(@Param('id') id: number): Promise<Warehouse | HttpException> {
     return await this.warehousesService.getById(Number(id));
-  }
-
-  @ApiOperation({ summary: 'Получение склада по его имени' })
-  @ApiResponse({ status: HttpStatus.OK, type: Warehouse })
-  @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: HttpExceptionType })
-  @Get('/getByName/:name')
-  async getByName(
-    @Param('name') name: string,
-  ): Promise<Warehouse | HttpException> {
-    return await this.warehousesService.getByName(name);
   }
 
   @ApiOperation({
